@@ -1,6 +1,6 @@
 function Stats({ stats, isExporting }) {
   return (
-    <div className="pdf-page-section flex flex-wrap border border-slate-200 rounded-xl divide-x divide-slate-200 bg-white overflow-hidden shadow-sm">
+    <div className="flex flex-wrap border border-slate-200 rounded-xl divide-x divide-slate-200 bg-white overflow-hidden shadow-sm">
       {stats.map((s, i) => (
         <div
           key={i}
