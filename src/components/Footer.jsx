@@ -8,36 +8,13 @@ function Footer() {
   });
 
   return (
-    <footer className=" pb-5 border-t border-gray-200  text-[#617c89]">
-      <div className="flex flex-col items-center justify-between gap-4 md:flex-row text-sm font-medium">
-        {/* Left Side: Print Timestamp */}
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-base">print</span>
-          <span>
-            Printed on: <span className="text-base">{printDate}</span>
-          </span>
-        </div>
-
-        {/* Center: Attribution */}
-        <div className="flex items-center gap-1">
-          <span>Powered by</span>
-          <a
-            href="https://mytime2cloud.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold text-primary hover:underline"
-          >
-            mytime2cloud.com
-          </a>
-        </div>
-
-        {/* Right Side: Pagination */}
-        <div className="flex items-center gap-2">
-          <span>
-            Page 1 of 1
-          </span>
-        </div>
+    <footer className="flex justify-between items-center text-[10px] text-slate-400 border-t border-slate-100 pt-4 uppercase tracking-wider">
+      <div>
+        Generated on:{" "}
+        <span className="font-semibold text-slate-600">{printDate}</span>
       </div>
+      <div>Confidential Report • mytime2cloud.com</div>
+      <div>Page 1 of 3</div>
     </footer>
   );
 }

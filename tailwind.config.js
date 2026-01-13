@@ -5,15 +5,26 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        primary: "#13a4ec",
-        "background-light": "#f6f7f8",
-        "background-dark": "#101c22",
-      },
       fontFamily: {
-        display: ["Manrope", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
+        display: ["Outfit", "sans-serif"],
+        modern: ['"Plus Jakarta Sans"', "sans-serif"],
+      },
+      colors: {
+        primary: "#0f172a", // Slate 900
+        secondary: "#475569", // Slate 600
+        accent: "#4f46e5", // Indigo 600 - Refined Primary Accent
+        "accent-dark": "#4338ca", // Indigo 700
+        "accent-subtle": "#e0e7ff", // Indigo 100
+        "surface-paper": "#ffffff",
+        "surface-muted": "#f8fafc", // Slate 50
+        "border-subtle": "#e2e8f0", // Slate 200
+      },
+      screens: {
+        print: { raw: "print" },
       },
     },
   },

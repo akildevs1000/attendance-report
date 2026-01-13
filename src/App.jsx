@@ -1,11 +1,14 @@
 import { Routes, Route, Navigate, useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Charts from "./components/Charts";
-import MonthlyBreakdownTable from "./components/MonthBreakDownTable";
-import PageHeader from "./components/PageHeader";
-import ProfileCard from "./components/ProfileCard";
+import Header from "./components/Header";
+import ProfileAndHighlights from "./components/ProfileAndHighlights";
 import Stats from "./components/Stats";
+import Table from "./components/Table";
 import Footer from "./components/Footer";
+
+import attendanceData from "./utils/tableData";
+import stats from "./utils/stats";
+import ExportButton from "./components/ExportButton";
 
 const DashboardContent = () => {
   const [searchParams] = useSearchParams();
@@ -18,13 +21,15 @@ const DashboardContent = () => {
   const to_date = searchParams.get("to_date"); // Default to 2 if missing
 
   // 1. Create the ref INSIDE the component that renders the content
-  const dashboardRef = useRef(null);
 
-  const [isExporting, setIsExporting] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState(new Date(from_date));
   const [endDate, setEndDate] = useState(new Date(to_date));
+
+  const [isExporting, setIsExporting] = useState(false);
+
+  const dashboardRef = useRef(null);
 
   const handleExportStatus = (status) => {
     setIsExporting(status);
@@ -41,15 +46,40 @@ const DashboardContent = () => {
         const formattedTo = endDate.toISOString().split("T")[0];
 
         const response = await fetch(
-          `https://mytime2cloud-backend.test/api/performance-report-single?employee_id=${employee_id}&company_id=${company_id}&from_date=${formattedFrom}&to_date=${formattedTo}`,
+          "https://mytime2cloud-backend.test/api/attendance-report-new",
           {
-            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              company_id: company_id,
+              from_date: formattedFrom,
+              to_date: formattedTo,
+
+              report_type: "Monthly",
+              shift_type_id: 0,
+              report_template: "Template1",
+              overtime: 0,
+              employee_id: [employee_id],
+              department_ids: [],
+              statuses: [],
+              branch_id: null,
+              showTabs: '{"single":true,"double":false,"multi":false}',
+              tabselected: {
+                isTrusted: true,
+              },
+              filterType: "Monthly",
+            }),
           }
         );
+
         const data = await response.json();
 
         if (data) {
-          setData(data);
+          console.log(data.data);
+          setData(data.data);
         }
       } catch (error) {
         console.error("Fetch error:", error);
@@ -70,38 +100,34 @@ const DashboardContent = () => {
 
   return (
     // 2. Attach the ref to the container you want to export as PDF
-    <div
-      ref={dashboardRef}
-      className="mx-auto flex max-w-[1200px] flex-col gap-8"
-    >
-      <PageHeader
-        startDate={startDate}
-        endDate={endDate}
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-        dashboardRef={dashboardRef}
-        onExportChange={handleExportStatus}
-      />
-      <ProfileCard isExporting={isExporting} employee={data} />
-      <Stats isExporting={isExporting} data={data.summary} />
-      <Charts data={data.chart_data} />
-      <MonthlyBreakdownTable data={data.monthly_breakdown} />
-      <Footer data={data} />
-    </div>
+    <>
+      <div className="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen p-4 md:p-8 print:p-0 print:bg-white flex justify-center">
+        <div
+          ref={dashboardRef}
+          className="bg-surface-paper shadow-2xl print:shadow-none max-w-[1122px] w-full p-8 md:p-10 flex flex-col gap-6 relative overflow-hidden h-auto md:min-h-[793px] border-t-8 border-accent"
+        >
+          <ExportButton
+            dashboardRef={dashboardRef}
+            onExportChange={handleExportStatus}
+          />
+          <Header />
+          <ProfileAndHighlights employee={data[0]?.employee} />
+          <Stats stats={stats} />
+          <Table attendanceData={data} />
+          <Footer />
+        </div>
+      </div>
+    </>
   );
 };
 
 function App() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
-      <main className="flex-1 px-4 py-8 lg:px-40">
-        <Routes>
-          {/* Default to ID 7 or whatever your default is */}
-          {/* <Route path="/" element={<Navigate to="/7" replace />} /> */}
-          <Route path="/" element={<DashboardContent />} />
-        </Routes>
-      </main>
-    </div>
+    <Routes>
+      {/* Default to ID 7 or whatever your default is */}
+      {/* <Route path="/" element={<Navigate to="/7" replace />} /> */}
+      <Route path="/" element={<DashboardContent />} />
+    </Routes>
   );
 }
 

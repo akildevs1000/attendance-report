@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/performance-report/',
+  base: '/attendance-report/',
   plugins: [react()],
   server: {
     port: 5717
