@@ -1,7 +1,6 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-
 const handleDownloadPdf = async () => {
     const pdf = new jsPDF("portrait", "pt", "a4");
     const pdfPages = document.querySelectorAll(".pdf-page-section");
