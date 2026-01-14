@@ -148,7 +148,23 @@ function Table({ shift_type_id, data = [], pageIndex = 0 }) {
                     {row.total_hrs}
                   </td>
                   <td className="px-4 py-3 text-center font-mono">
-                    {row.status}
+                    {row.status === "P" && (
+                      <span
+                        className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
+                     bg-emerald-50 text-emerald-700 border border-emerald-200"
+                      >
+                        Present
+                      </span>
+                    )}
+
+                    {row.status === "A" && (
+                      <span
+                        className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
+                     bg-rose-50 text-rose-700 border border-rose-200"
+                      >
+                        Absent
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
