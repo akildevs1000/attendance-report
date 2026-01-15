@@ -17,7 +17,7 @@ const handleDownloadPdf = async (employeeId = null) => {
 
   for (let i = 0; i < pdfPages.length; i++) {
     const canvas = await html2canvas(pdfPages[i], {
-      scale: 1.75,
+      scale: 3,
       useCORS: true,
       logging: true,
     });
