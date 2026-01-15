@@ -3,13 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import ProfileAndHighlights from "./components/ProfileAndHighlights";
 import Stats from "./components/Stats";
+import GeneralTable from "./components/GeneralTable";
 import Table from "./components/Table";
 import Footer from "./components/Footer";
 
-import stats from "./utils/stats";
 import handleDownloadPdf from "./utils/download";
 import getData from "./utils/api";
 import paginateTableData from "./utils/paginate";
+
+
+import { calculateTotalHours } from "./utils/time";
+
 
 const App = () => {
   const [employeesData, setEmployeesData] = useState([]);
@@ -81,8 +85,6 @@ const App = () => {
     }, 3000);
   }, []);
 
-  // const pages = paginateTableData(data, 15, 16);
-
   if (loading)
     return (
       <>
@@ -117,7 +119,6 @@ const App = () => {
                  print:mb-0 page-break-after"
                 data-employee={employeeBlock.employee_id}
               >
-                {/* HEADER */}
                 <Header
                   from_date={from_date}
                   to_date={to_date}
@@ -126,20 +127,29 @@ const App = () => {
 
                 {pageIndex == 0 ? (
                   <>
-                    {/* First page of EACH employee */}
                     <ProfileAndHighlights
                       employee={employeeBlock.records[0]?.employee}
+                      totalHours={calculateTotalHours(employeeBlock.records.filter(e => e.total_hrs !== "---").map(r => r.total_hrs))}
+                      lateIn={calculateTotalHours(employeeBlock.records.filter(e => e.late_coming !== "---").map(r => r.late_coming))}
+                      OT={calculateTotalHours(employeeBlock.records.filter(e => e.ot !== "---").map(r => r.ot))}
                     />
-                    <Stats stats={stats} />
+                    <Stats stats={employeeBlock.records} />
                   </>
                 ) : null}
 
-                {/* TABLE */}
-                <Table
-                  isGeneral={isGeneral}
-                  pageIndex={pageIndex}
-                  data={pageData}
-                />
+                {isGeneral ? (
+                  <GeneralTable
+                    isGeneral={isGeneral}
+                    pageIndex={pageIndex}
+                    data={pageData}
+                  />
+                ) :
+                  <Table
+                    isGeneral={isGeneral}
+                    pageIndex={pageIndex}
+                    data={pageData}
+                  />
+                }
 
                 <Footer page={pageIndex + 1} totalPages={pages.length} />
               </div>

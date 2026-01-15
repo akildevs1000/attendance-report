@@ -1,8 +1,7 @@
 import React from "react";
-
 import { formatMinutesToHHMM } from "../utils/date";
 
-function Table({ isGeneral, data = [], pageIndex = 0 }) {
+function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
   return (
     <div
       className={`flex flex-col gap-10 
@@ -11,15 +10,22 @@ function Table({ isGeneral, data = [], pageIndex = 0 }) {
     >
       <div className="border border-slate-200 rounded-xl bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm border-collapse m-0">
+          <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 text-xs uppercase font-semibold text-slate-500 tracking-wider">
               <tr>
-                <th className="p-2 border-b w-28">Date</th>
-                <th className="p-2 border-b">Shift Details</th>
-                <th className="p-2 border-b">Punch Records</th>
-                <th className="p-2 border-b text-center">Overtime</th>
-                <th className="p-2 border-b text-center">Work Hrs</th>
-                <th className="p-2 border-b text-center">Status</th>
+                <th className="px-4 py-3 border-b w-28">Date</th>
+                <th className="px-4 py-3 border-b">Shift Details</th>
+                <th className="px-4 py-3 border-b">In Time</th>
+                <th className="px-4 py-3 border-b">Out Time</th>
+                <th className="px-4 py-3 border-b text-center">
+                  Late hours
+                </th>
+                <th className="px-4 py-3 border-b text-center text-amber-600">
+                  Early Go
+                </th>
+                <th className="px-4 py-3 border-b text-center">Overtime</th>
+                <th className="px-4 py-3 border-b text-center">Work Hrs</th>
+                <th className="px-4 py-3 border-b text-center">Status</th>
               </tr>
             </thead>
 
@@ -55,49 +61,17 @@ function Table({ isGeneral, data = [], pageIndex = 0 }) {
                     </div>
                   </td>
 
-                  <td className="px-4 py-3 align-top">
-                    <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 max-w-[500px]">
-                      {row.logs &&
-                        row.logs.map((log, index) => {
-                          console.log("log:", log, "Index:", index);
-
-                          return (
-                            <React.Fragment key={index}>
-                              <div className="flex flex-col bg-white border border-slate-200 rounded-md overflow-hidden shadow-sm min-w-[110px]">
-                                <div className="px-2 py-1 text-xs font-mono text-slate-700 border-b border-slate-100 flex justify-center items-center">
-                                  {/* Left Section: IN */}
-                                  <span className="text-center leading-tight">
-                                    {log.in}
-                                    {/* <br />
-                                      <small className="block text-slate-400">
-                                        {log.device_in}
-                                      </small> */}
-                                  </span>
-
-                                  {/* Arrow */}
-                                  <span className="text-slate-300 mx-2">
-                                    →
-                                  </span>
-
-                                  {/* Right Section: OUT */}
-                                  <span className="text-center leading-tight">
-                                    {log.out}
-                                    {/* <br />
-                                      <small className="block text-slate-400">
-                                        {log.device_out}
-                                      </small> */}
-                                  </span>
-                                </div>
-                                <div className="px-2 py-1 text-[10px] font-bold font-mono text-slate-500 bg-slate-50 text-center">
-                                  {formatMinutesToHHMM(
-                                    log.total_minutes || 0
-                                  )}
-                                </div>
-                              </div>
-                            </React.Fragment>
-                          );
-                        })}
-                    </div>
+                  <td className="px-4 py-3 font-medium text-slate-600">
+                    {row.in}
+                  </td>
+                  <td className="px-4 py-3 font-medium text-slate-600">
+                    {row.out}
+                  </td>
+                  <td className="px-4 py-3 text-center font-mono">
+                    {row.late_coming}
+                  </td>
+                  <td className="px-4 py-3 text-center font-mono">
+                    {row.early_going}
                   </td>
 
                   <td className="px-4 py-3 text-center font-mono">{row.ot}</td>
@@ -144,4 +118,4 @@ function Table({ isGeneral, data = [], pageIndex = 0 }) {
   );
 }
 
-export default Table;
+export default GeneralTable;

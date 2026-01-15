@@ -1,4 +1,4 @@
-import printedDate from "../utils/date";
+import { printedDate } from "../utils/date";
 
 
 function Footer({ page, totalPages }) {
