@@ -1,23 +1,23 @@
 import React from "react";
 
-function Table({ shift_type_id, data = [], pageIndex = 0 }) {
-  const formatMinutesToHHMM = (totalMinutes) => {
-    if (!totalMinutes && totalMinutes !== 0) return "--:--";
+const formatMinutesToHHMM = (totalMinutes) => {
+  if (!totalMinutes && totalMinutes !== 0) return "--:--";
 
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}`;
-  };
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
+};
 
+function Table({ isGeneral, data = [], pageIndex = 0 }) {
   return (
     <div
-      className={`flex flex-col gap-10 h-[${
-        pageIndex == 0 ? "1080px" : "1280px"
-      }]`}
+      className={`flex flex-col gap-10 
+        h-[${pageIndex == 0 ? "350px" : "500px"}]
+        `}
     >
       <div className="border border-slate-200 rounded-xl bg-white">
         <div className="overflow-x-auto">
@@ -26,7 +26,7 @@ function Table({ shift_type_id, data = [], pageIndex = 0 }) {
               <tr>
                 <th className="px-4 py-3 border-b w-28">Date</th>
                 <th className="px-4 py-3 border-b">Shift Details</th>
-                {shift_type_id != 2 && shift_type_id != 5 ? (
+                {isGeneral ? (
                   <>
                     <th className="px-4 py-3 border-b">In Time</th>
                     <th className="px-4 py-3 border-b">Out Time</th>
@@ -83,7 +83,7 @@ function Table({ shift_type_id, data = [], pageIndex = 0 }) {
                     </div>
                   </td>
 
-                  {shift_type_id != 2 && shift_type_id != 5 ? (
+                  {isGeneral ? (
                     <>
                       <td className="px-4 py-3 font-medium text-slate-600">
                         {row.in}
@@ -147,22 +147,33 @@ function Table({ shift_type_id, data = [], pageIndex = 0 }) {
                   <td className="px-4 py-3 text-center font-mono">
                     {row.total_hrs}
                   </td>
+
                   <td className="px-4 py-3 text-center font-mono">
                     {row.status === "P" && (
                       <span
-                        className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
-                     bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        className="relative h-[30px] w-[60px] inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
+        bg-emerald-50 text-emerald-700 border border-emerald-200"
                       >
-                        Present
+                        <span style={{ position: "absolute", top: "-2px" }}>
+                          Present
+                        </span>
                       </span>
                     )}
 
                     {row.status === "A" && (
                       <span
-                        className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
-                     bg-rose-50 text-rose-700 border border-rose-200"
+                        className="relative h-[30px] w-[60px] inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
+        bg-rose-50 text-rose-700 border border-rose-200"
                       >
-                        Absent
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-2px",
+                            left: "11px",
+                          }}
+                        >
+                          Absent
+                        </span>
                       </span>
                     )}
                   </td>
@@ -170,11 +181,6 @@ function Table({ shift_type_id, data = [], pageIndex = 0 }) {
               ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Page footer (important for PDF) */}
-        <div className="p-2 text-right text-xs text-gray-400">
-          {/* Page {pageIndex + 1} of {pages.length} */}
         </div>
       </div>
     </div>

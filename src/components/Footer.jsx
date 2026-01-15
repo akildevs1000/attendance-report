@@ -7,7 +7,7 @@ function Footer({ page, totalPages }) {
       className="
         flex justify-between items-center
         text-[10px] text-slate-400
-        border-t border-slate-100 pt-14
+        border-t border-slate-100 pt-[10px]
         uppercase tracking-wider
       "
     >

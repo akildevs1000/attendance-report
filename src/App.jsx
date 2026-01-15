@@ -18,10 +18,11 @@ const App = () => {
 
   const [searchParams] = useSearchParams();
 
-  // http://localhost:5717/attendance-report/?employee_ids=50,48&company_id=13&from_date=2025-12-01&to_date=2025-12-31
+  // 12-01&to_date=2025-12-31
   const employee_ids =
     searchParams.get("employee_ids")?.split(",").filter(Boolean) || [];
   const company_id = searchParams.get("company_id") || "2"; // Default to 2 if missing
+  const company_name = searchParams.get("company_name") || "Organization"; // Default to 2 if missing
   const shift_type_id = searchParams.get("shift_type_id") || "2"; // Default to 2 if missing
 
   const from_date = searchParams.get("from_date"); // Default to 2 if missing
@@ -37,12 +38,6 @@ const App = () => {
   const [isExporting, setIsExporting] = useState(false);
 
   const dashboardRef = useRef(null);
-
-  const handleExportStatus = (status) => {
-    setIsExporting(status);
-    console.log("Export status changed in App.js:", status);
-    // You can trigger a global toast or loading overlay here
-  };
 
   useEffect(() => {
     const fetchAllEmployees = async () => {
@@ -76,10 +71,14 @@ const App = () => {
   useEffect(() => {
     if (hasExported.current) return;
     hasExported.current = true;
+    setIsExporting(true);
+    setTimeout(() => {
+      handleDownloadPdf();
+    }, 2000);
 
     setTimeout(() => {
-      // handleDownloadPdf();
-    }, 2000);
+      setIsExporting(false);
+    }, 3000);
   }, []);
 
   // const pages = paginateTableData(data, 15, 16);
@@ -96,44 +95,52 @@ const App = () => {
       </>
     );
 
+  let isGeneral = shift_type_id != 2 && shift_type_id != 5;
+
   return (
     <>
-      <div className="bg-slate-100 min-h-screen p-4 md:p-8 print:p-0 flex justify-center">
+      <div className="bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center">
         <div className="w-full max-w-[1122px]">
           {employeesData.map((employeeBlock, empIndex) => {
-            const pages = paginateTableData(employeeBlock.records, 15, 16);
+            const pages = paginateTableData(
+              employeeBlock.records,
+              isGeneral ? 15 : 3,
+              isGeneral ? 16 : 7
+            );
 
             return pages.map((pageData, pageIndex) => (
               <div
                 key={`${employeeBlock.employee_id}-${pageIndex}`}
-                className="pdf-page-section bg-white shadow-2xl print:shadow-none
-                 p-8 md:p-10 flex flex-col gap-6
+                className="pdf-page-section relative bg-white shadow-2xl print:shadow-none
+                 p-4 flex flex-col gap-6
                  border-t-8 border-accent
-                 mb-8 print:mb-0 page-break-after"
+                 print:mb-0 page-break-after"
+                data-employee={employeeBlock.employee_id}
               >
                 {/* HEADER */}
-                <Header />
+                <Header
+                  from_date={from_date}
+                  to_date={to_date}
+                  company_name={company_name}
+                />
 
-                {/* First page of EACH employee */}
-                {pageIndex === 0 && (
+                {pageIndex == 0 ? (
                   <>
+                    {/* First page of EACH employee */}
                     <ProfileAndHighlights
                       employee={employeeBlock.records[0]?.employee}
                     />
                     <Stats stats={stats} />
                   </>
-                )}
+                ) : null}
 
                 {/* TABLE */}
                 <Table
-                  shift_type_id={shift_type_id}
+                  isGeneral={isGeneral}
                   pageIndex={pageIndex}
                   data={pageData}
                 />
 
-                <div className="flex-grow" />
-
-                {/* FOOTER */}
                 <Footer page={pageIndex + 1} totalPages={pages.length} />
               </div>
             ));

@@ -10,9 +10,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        // THESE ARE SPECIAL FONTS
         display: ["Outfit", "sans-serif"],
-        modern: ["'Plus Jakarta Sans'", "sans-serif"],
+        modern: ['"Plus Jakarta Sans"', "sans-serif"],
       },
       colors: {
         primary: "#0f172a", // Slate 900

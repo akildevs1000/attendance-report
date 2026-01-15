@@ -1,4 +1,13 @@
-function Header() {
+function Header({ company_name = "Organization", from_date, to_date }) {
+
+  const getDate = (dateStr) => {
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(new Date(dateStr));
+  };
+
   return (
     <header className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-6">
       <div className="flex flex-col gap-1">
@@ -9,7 +18,9 @@ function Header() {
           <span className="material-symbols-outlined text-accent text-lg">
             calendar_month
           </span>
-          <span>01 Dec 2025 - 25 Dec 2025</span>
+          <span>
+            {getDate(from_date)} - {getDate(to_date)}
+          </span>
           <span className="w-1 h-1 bg-slate-300 rounded-full mx-1"></span>
           <span className="text-slate-400">Monthly Exact</span>
         </div>
@@ -30,7 +41,7 @@ function Header() {
         </div>
         <div>
           <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
-            Hilal Cleaning Co.
+            {company_name}
           </h2>
           <div className="text-xs text-slate-500 flex items-center gap-1">
             <span className="material-symbols-outlined text-[14px]">
