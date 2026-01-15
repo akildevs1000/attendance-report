@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Monthly Attendance Report - Split Duty</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                    display: ['Outfit', 'sans-serif'],
+                    modern: ['"Plus Jakarta Sans"', 'sans-serif'],
+                },
+                colors: {
+                    primary: "#0f172a", // Slate 900
+                    secondary: "#475569", // Slate 600
+                    accent: "#4f46e5",  // Indigo 600 - Refined Primary Accent
+                    "accent-dark": "#4338ca", // Indigo 700
+                    "accent-subtle": "#e0e7ff", // Indigo 100
+                    "surface-paper": "#ffffff",
+                    "surface-muted": "#f8fafc", // Slate 50
+                    "border-subtle": "#e2e8f0", // Slate 200
+                },
+                screens: {
+                    'print': {'raw': 'print'},
+                }
+            },
+        },
+    };
+</script>
+<style>
+    :root {
+        --holiday-bg: #fffbeb;}
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    @page {
+        size: A4 landscape;
+        margin: 0;
+    }
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen p-4 md:p-8 print:p-0 print:bg-white flex justify-center">
+<div class="bg-surface-paper shadow-2xl print:shadow-none max-w-[1122px] w-full p-8 md:p-10 flex flex-col gap-6 relative overflow-hidden h-auto md:min-h-[793px] border-t-8 border-accent">
+<header class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl font-display font-bold text-slate-900 tracking-tight uppercase">Monthly Attendance Report - Split Duty</h1>
+<div class="flex items-center gap-2 text-sm text-slate-500 font-medium">
+<span class="material-symbols-outlined text-accent text-lg">calendar_month</span>
+<span>01 Dec 2025 - 25 Dec 2025</span>
+<span class="w-1 h-1 bg-slate-300 rounded-full mx-1"></span>
+<span class="text-slate-400">Monthly Exact</span>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-4 md:mt-0 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+<div class="w-10 h-10 bg-accent rounded flex items-center justify-center text-white shadow-sm shadow-indigo-200">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div>
+<h2 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Hilal Cleaning Co.</h2>
+<div class="text-xs text-slate-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> Head Office
+                </div>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+<div class="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-5 flex flex-row items-center gap-4 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-accent/5 to-transparent rounded-bl-full"></div>
+<div class="w-16 h-16 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-300 shrink-0 shadow-sm z-10">
+<span class="material-symbols-outlined text-4xl">person</span>
+</div>
+<div class="flex-1 min-w-0 z-10">
+<h3 class="text-lg font-bold text-slate-900 truncate">Sandra Sandra</h3>
+<p class="text-xs font-semibold text-accent uppercase tracking-wider mb-1">ID: 1100</p>
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span class="truncate">Office Dept</span>
+<span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+<span class="truncate">Split Duty</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-center items-center shadow-sm relative overflow-hidden group">
+<div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Score</span>
+<span class="text-3xl font-display font-bold text-slate-900">92%</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-center items-center shadow-sm relative overflow-hidden group">
+<div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Worked</span>
+<span class="text-3xl font-display font-bold text-slate-900">168<span class="text-sm text-slate-400 font-medium ml-1">h</span></span>
+</div>
+<div class="bg-rose-50 border border-rose-100 rounded-xl p-4 flex flex-col justify-center items-center">
+<span class="text-xs font-bold text-rose-500 uppercase tracking-wider">Lost Hours</span>
+<span class="text-2xl font-display font-bold text-rose-600">02:49</span>
+</div>
+<div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex flex-col justify-center items-center">
+<span class="text-xs font-bold text-indigo-500 uppercase tracking-wider">Overtime</span>
+<span class="text-2xl font-display font-bold text-indigo-600">00:00</span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap border border-slate-200 rounded-xl divide-x divide-slate-200 bg-white overflow-hidden shadow-sm">
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Present</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-emerald-600">19</div>
+<div class="h-1 w-6 mx-auto bg-emerald-500 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Absent</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-rose-600">5</div>
+<div class="h-1 w-6 mx-auto bg-rose-500 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Week Off</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-slate-600">0</div>
+<div class="h-1 w-6 mx-auto bg-slate-400 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Leaves</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-amber-500">0</div>
+<div class="h-1 w-6 mx-auto bg-amber-400 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Holidays</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-violet-500">0</div>
+<div class="h-1 w-6 mx-auto bg-violet-500 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Missing</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-orange-500">1</div>
+<div class="h-1 w-6 mx-auto bg-orange-400 rounded-full mt-2"></div>
+</div>
+<div class="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group">
+<div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Manual</div>
+<div class="text-xl font-bold text-slate-900 group-hover:text-cyan-500">0</div>
+<div class="h-1 w-6 mx-auto bg-cyan-500 rounded-full mt-2"></div>
+</div>
+</div>
+<div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm flex-grow flex flex-col bg-white">
+<div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+<h3 class="font-bold text-slate-800 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">table_chart</span>
+                Daily Logs
+            </h3>
+<div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Holiday Color:</span>
+<div class="flex items-center gap-1.5">
+<button class="w-5 h-5 rounded bg-[#fffbeb] border border-amber-200 hover:scale-110 transition-transform shadow-sm ring-offset-1 focus:ring-2 ring-amber-200" onclick="document.documentElement.style.setProperty('--holiday-bg', '#fffbeb')" title="Amber"></button>
+<button class="w-5 h-5 rounded bg-[#fff1f2] border border-rose-200 hover:scale-110 transition-transform shadow-sm ring-offset-1 focus:ring-2 ring-rose-200" onclick="document.documentElement.style.setProperty('--holiday-bg', '#fff1f2')" title="Rose"></button>
+<button class="w-5 h-5 rounded bg-[#f0f9ff] border border-sky-200 hover:scale-110 transition-transform shadow-sm ring-offset-1 focus:ring-2 ring-sky-200" onclick="document.documentElement.style.setProperty('--holiday-bg', '#f0f9ff')" title="Sky"></button>
+<button class="w-5 h-5 rounded bg-[#f0fdf4] border border-emerald-200 hover:scale-110 transition-transform shadow-sm ring-offset-1 focus:ring-2 ring-emerald-200" onclick="document.documentElement.style.setProperty('--holiday-bg', '#f0fdf4')" title="Emerald"></button>
+<button class="w-5 h-5 rounded bg-[#f8fafc] border border-slate-200 hover:scale-110 transition-transform shadow-sm ring-offset-1 focus:ring-2 ring-slate-200" onclick="document.documentElement.style.setProperty('--holiday-bg', '#f8fafc')" title="None"></button>
+<div class="w-px h-4 bg-slate-200 mx-1"></div>
+<div class="relative w-5 h-5 overflow-hidden rounded border border-slate-200 hover:scale-110 transition-transform shadow-sm group">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500"></div>
+<input class="opacity-0 absolute inset-0 cursor-pointer w-full h-full p-0 border-0" oninput="document.documentElement.style.setProperty('--holiday-bg', this.value)" title="Custom Color" type="color"/>
+</div>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto flex-grow">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 text-xs uppercase font-semibold text-slate-500 tracking-wider">
+<tr>
+<th class="px-4 py-3 border-b border-slate-200 w-28">Date</th>
+<th class="px-4 py-3 border-b border-slate-200">Shift Details</th>
+<th class="px-4 py-3 border-b border-slate-200">In Time</th>
+<th class="px-4 py-3 border-b border-slate-200">Out Time</th>
+<th class="px-4 py-3 border-b border-slate-200 text-center cursor-pointer hover:bg-slate-100 transition-colors select-none group">
+<div class="flex items-center justify-center gap-1">
+                                Lost hours
+                                <span class="material-symbols-outlined text-[14px] text-slate-400 opacity-50 group-hover:opacity-100 transition-all">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 border-b border-slate-200 text-center text-amber-600 cursor-pointer hover:bg-slate-100 transition-colors select-none group">
+<div class="flex items-center justify-center gap-1">
+                                Early Go
+                                <span class="material-symbols-outlined text-[14px] text-amber-400 opacity-50 group-hover:opacity-100 transition-all">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 border-b border-slate-200 text-center cursor-pointer hover:bg-slate-100 transition-colors select-none group">
+<div class="flex items-center justify-center gap-1">
+                                Overtime
+                                <span class="material-symbols-outlined text-[14px] text-slate-400 opacity-50 group-hover:opacity-100 transition-all">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 border-b border-slate-200 text-center">Work Hrs</th>
+<th class="px-4 py-3 border-b border-slate-200 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">01 Dec</div>
+<div class="text-xs text-slate-500">Monday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">08:05</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">14:02</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">12:05</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">18:05</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:07</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">07:53</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                PRESENT
+                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors bg-rose-50/40">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">02 Dec</div>
+<div class="text-xs text-slate-500">Tuesday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-mono text-slate-400 h-[16px] flex items-center">-- : --</div>
+<div class="text-xs font-mono text-slate-400 h-[16px] flex items-center">-- : --</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-mono text-slate-400 h-[16px] flex items-center">-- : --</div>
+<div class="text-xs font-mono text-slate-400 h-[16px] flex items-center">-- : --</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-400">00:00</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                ABSENT
+                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">03 Dec</div>
+<div class="text-xs text-slate-500">Wednesday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">08:01</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">14:00</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">12:02</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">18:10</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:01</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:10</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">08:11</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                PRESENT
+                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">04 Dec</div>
+<div class="text-xs text-slate-500">Thursday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">08:10</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">14:05</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">12:00</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">18:01</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:15</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">07:45</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                PRESENT
+                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">05 Dec</div>
+<div class="text-xs text-slate-500">Friday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">08:00</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">14:00</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">11:55</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">17:55</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-amber-600 font-bold">00:10</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">07:50</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                PRESENT
+                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-900">06 Dec</div>
+<div class="text-xs text-slate-500">Saturday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-700">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-700">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">07:55</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">13:58</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">12:30</div>
+<div class="text-xs font-medium text-slate-900 h-[16px] flex items-center">19:00</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">01:32</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-600">09:32</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                PRESENT
+                            </span>
+</td>
+</tr>
+<tr class="transition-colors hover:brightness-[0.98]" style="background-color: var(--holiday-bg);">
+<td class="px-4 py-4 align-middle">
+<div class="font-bold text-slate-600">07 Dec</div>
+<div class="text-xs text-amber-600 font-semibold">Sunday</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Morn</span>
+<span class="text-xs font-medium text-slate-500">08:00 - 12:00</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-400 uppercase w-8 tracking-wider">Aftn</span>
+<span class="text-xs font-medium text-slate-500">14:00 - 18:00</span>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-mono text-slate-300 h-[16px] flex items-center">-- : --</div>
+<div class="text-xs font-mono text-slate-300 h-[16px] flex items-center">-- : --</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle">
+<div class="flex flex-col gap-2">
+<div class="text-xs font-mono text-slate-300 h-[16px] flex items-center">-- : --</div>
+<div class="text-xs font-mono text-slate-300 h-[16px] flex items-center">-- : --</div>
+</div>
+</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">-</td>
+<td class="px-4 py-4 align-middle text-center font-mono text-slate-300">00:00</td>
+<td class="px-4 py-4 align-middle text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-700 border border-amber-200 shadow-sm">
+                                HOLIDAY
+                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-slate-200 bg-white flex justify-between items-center">
+<span class="text-xs text-slate-500">
+                Showing <strong>1-7</strong> of 25
+            </span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 text-xs">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-slate-900 text-white text-xs font-medium hover:bg-slate-800 transition-colors">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 text-xs">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<footer class="flex justify-between items-center text-[10px] text-slate-400 border-t border-slate-100 pt-4 uppercase tracking-wider">
+<div>
+            Generated on: <span class="font-semibold text-slate-600">25 Dec 2025, 14:30</span>
+</div>
+<div>
+            Confidential Report • mytime2cloud.com
+        </div>
+<div>
+            Page 1 of 3
+        </div>
+</footer>
+</div>
+
+</body></html>
