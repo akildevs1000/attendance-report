@@ -73,17 +73,21 @@ const App = () => {
   }, [company_id, startDate, endDate]);
 
   useEffect(() => {
-    if (hasExported.current) return;
-    hasExported.current = true;
-    setIsExporting(true);
-    setTimeout(() => {
-      handleDownloadPdf();
-    }, 2000);
+    // Only trigger export if data is loaded and we haven't exported yet
+    if (!loading && employeesData.length > 0 && !hasExported.current) {
+      hasExported.current = true;
+      setIsExporting(true);
 
-    setTimeout(() => {
-      setIsExporting(false);
-    }, 3000);
-  }, []);
+      setTimeout(() => {
+        handleDownloadPdf();
+      }, 500); // small delay to ensure DOM updates
+
+      setTimeout(() => {
+        setIsExporting(false);
+      }, 1500);
+    }
+  }, [loading, employeesData]);
+
 
   if (loading)
     return (
