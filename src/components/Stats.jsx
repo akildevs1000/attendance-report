@@ -29,7 +29,9 @@ function Stats({ stats, isExporting }) {
           key={i}
           className="flex-1 min-w-[80px] p-3 text-center hover:bg-slate-50 transition-colors group"
         >
-          <div className="text-[10px] font-bold text-slate-400 uppercase mb-1">
+          <div className={`text-[10px] font-bold text-slate-400 uppercase mb-1 ${
+                isExporting ? "-mt-3" : ""
+              } `}>
             {s.label}
           </div>
           <div className={`text-xl font-bold text-slate-900 ${s.hover}`}>

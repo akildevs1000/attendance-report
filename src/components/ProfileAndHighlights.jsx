@@ -1,4 +1,28 @@
-function ProfileAndHighlights({ employee, totalHours, lateIn, OT }) {
+function ProfileAndHighlights({
+  isExporting,
+  employee,
+  totalHours,
+  lateIn,
+  OT,
+}) {
+  let highlights = [
+    { label: "Score", val: "92%" },
+    { label: "Worked", val: totalHours?.hours, unit: "h" },
+    {
+      label: "Late In",
+      val: lateIn.hours || "00:00",
+      color: "text-rose-600",
+      bg: "bg-rose-50",
+      labelColor: "text-rose-500",
+    },
+    {
+      label: "Overtime",
+      val: OT.hours || "00:00",
+      color: "text-indigo-600",
+      bg: "bg-indigo-50",
+      labelColor: "text-indigo-500",
+    },
+  ];
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-row items-center gap-4 relative overflow-hidden">
@@ -18,7 +42,11 @@ function ProfileAndHighlights({ employee, totalHours, lateIn, OT }) {
           </span>
         </div>
         <div className="flex-1 min-w-0 z-10">
-          <h3 className="text-lg font-bold text-slate-900 truncate">
+          <h3
+            className={`text-lg font-bold text-slate-900 truncate ${
+              isExporting ? "-mt-6 pb-[1px]" : ""
+            }`}
+          >
             {employee?.first_name}
           </h3>
           <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">
@@ -31,41 +59,29 @@ function ProfileAndHighlights({ employee, totalHours, lateIn, OT }) {
       </div>
 
       <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[
-          { label: "Score", val: "92%" },
-          { label: "Worked", val: totalHours?.hours, unit: "h" },
-          {
-            label: "Late In",
-            val: lateIn.hours || "00:00",
-            color: "text-rose-600",
-            bg: "bg-rose-50",
-            labelColor: "text-rose-500",
-          },
-          {
-            label: "Overtime",
-            val: OT.hours || "00:00",
-            color: "text-indigo-600",
-            bg: "bg-indigo-50",
-            labelColor: "text-indigo-500",
-          },
-        ].map((stat, i) => (
+        {highlights.map((stat, i) => (
           <div
             key={i}
-            className={`${stat.bg || "bg-white"
-              } border border-slate-200 rounded-xl p-2 flex flex-col justify-center items-center shadow-sm relative overflow-hidden group`}
+            className={`${
+              stat.bg || "bg-white"
+            } border border-slate-200 rounded-xl p-2 flex flex-col justify-center items-center shadow-sm relative overflow-hidden group`}
           >
             {!stat.bg && (
               <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             )}
             <span
-              className={`text-xs font-bold ${stat.labelColor || "text-slate-400"
-                } uppercase tracking-wider`}
+              className={`text-xs font-bold ${
+                stat.labelColor || "text-slate-400"
+              } ${
+                isExporting ? "-mt-3" : ""
+              }  uppercase tracking-wider`}
             >
               {stat.label}
             </span>
             <span
-              className={`text-2xl font-display font-bold ${stat.color || "text-slate-900"
-                }`}
+              className={`font-display font-bold ${
+                stat.color || "text-slate-900"
+              }`}
             >
               {stat.val}
               {stat.unit && (

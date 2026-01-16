@@ -1,5 +1,9 @@
-function Header({ company_name = "Organization", from_date, to_date }) {
-
+function Header({
+  isExporting,
+  company_name = "Organization",
+  from_date,
+  to_date,
+}) {
   const getDate = (dateStr) => {
     return new Intl.DateTimeFormat("en-GB", {
       day: "2-digit",
@@ -40,7 +44,11 @@ function Header({ company_name = "Organization", from_date, to_date }) {
           </span>
         </div>
         <div>
-          <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
+          <h2
+            className={`${
+              isExporting ? "-mt-4" : ""
+            } text-sm font-bold text-slate-900 uppercase tracking-wide`}
+          >
             {company_name}
           </h2>
           <div className="text-xs text-slate-500 flex items-center gap-1">

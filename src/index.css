@@ -17,3 +17,7 @@ body {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+
+.negative-spacing {
+  margin-top: -10px; /* adjust as needed */
+}

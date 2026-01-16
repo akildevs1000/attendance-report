@@ -17,9 +17,10 @@ const handleDownloadPdf = async (employeeId = null) => {
 
   for (let i = 0; i < pdfPages.length; i++) {
     const canvas = await html2canvas(pdfPages[i], {
-      scale: 3,
+      scale: 2,
       useCORS: true,
       logging: true,
+      scrollY: -window.scrollY, // prevents page scroll from adding space
     });
 
     const margin = 10;

@@ -11,9 +11,7 @@ import handleDownloadPdf from "./utils/download";
 import getData from "./utils/api";
 import paginateTableData from "./utils/paginate";
 
-
 import { calculateTotalHours } from "./utils/time";
-
 
 const App = () => {
   const [employeesData, setEmployeesData] = useState([]);
@@ -88,7 +86,6 @@ const App = () => {
     }
   }, [loading, employeesData]);
 
-
   if (loading)
     return (
       <>
@@ -102,16 +99,17 @@ const App = () => {
     );
 
   let isGeneral = shift_type_id != 2 && shift_type_id != 5;
+  let pairLength = shift_type_id == 2 ? 5 : 2; // 5 pairs for multi and 2 pairs for split
 
   return (
     <>
       <div className="bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center">
-        <div className="w-full max-w-[1122px]">
+        <div className="w-full max-w-[1122px] printable">
           {employeesData.map((employeeBlock, empIndex) => {
             const pages = paginateTableData(
               employeeBlock.records,
-              isGeneral ? 15 : 3,
-              isGeneral ? 16 : 7
+              isGeneral ? 15 : 5,
+              isGeneral ? 16 : 8
             );
 
             return pages.map((pageData, pageIndex) => (
@@ -124,6 +122,7 @@ const App = () => {
                 data-employee={employeeBlock.employee_id}
               >
                 <Header
+                  isExporting={isExporting}
                   from_date={from_date}
                   to_date={to_date}
                   company_name={company_name}
@@ -132,12 +131,25 @@ const App = () => {
                 {pageIndex == 0 ? (
                   <>
                     <ProfileAndHighlights
+                      isExporting={isExporting}
                       employee={employeeBlock.records[0]?.employee}
-                      totalHours={calculateTotalHours(employeeBlock.records.filter(e => e.total_hrs !== "---").map(r => r.total_hrs))}
-                      lateIn={calculateTotalHours(employeeBlock.records.filter(e => e.late_coming !== "---").map(r => r.late_coming))}
-                      OT={calculateTotalHours(employeeBlock.records.filter(e => e.ot !== "---").map(r => r.ot))}
+                      totalHours={calculateTotalHours(
+                        employeeBlock.records
+                          .filter((e) => e.total_hrs !== "---")
+                          .map((r) => r.total_hrs)
+                      )}
+                      lateIn={calculateTotalHours(
+                        employeeBlock.records
+                          .filter((e) => e.late_coming !== "---")
+                          .map((r) => r.late_coming)
+                      )}
+                      OT={calculateTotalHours(
+                        employeeBlock.records
+                          .filter((e) => e.ot !== "---")
+                          .map((r) => r.ot)
+                      )}
                     />
-                    <Stats stats={employeeBlock.records} />
+                    <Stats isExporting={isExporting} stats={employeeBlock.records} />
                   </>
                 ) : null}
 
@@ -147,13 +159,13 @@ const App = () => {
                     pageIndex={pageIndex}
                     data={pageData}
                   />
-                ) :
+                ) : (
                   <Table
-                    isGeneral={isGeneral}
+                    pairLength={pairLength}
                     pageIndex={pageIndex}
                     data={pageData}
                   />
-                }
+                )}
 
                 <Footer page={pageIndex + 1} totalPages={pages.length} />
               </div>
