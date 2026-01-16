@@ -32,8 +32,7 @@ const App = () => {
 
   // 1. Create the ref INSIDE the component that renders the content
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [exportProgress, setExportProgress] = useState(0);
   const [startDate, setStartDate] = useState(new Date(from_date));
   const [endDate, setEndDate] = useState(new Date(to_date));
 
@@ -45,7 +44,7 @@ const App = () => {
     const fetchAllEmployees = async () => {
       if (!startDate || !endDate) return;
 
-      setLoading(true);
+      setIsExporting(true);
       try {
         const results = [];
 
@@ -63,7 +62,7 @@ const App = () => {
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -72,104 +71,121 @@ const App = () => {
 
   useEffect(() => {
     // Only trigger export if data is loaded and we haven't exported yet
-    if (!loading && employeesData.length > 0 && !hasExported.current) {
+    if (employeesData.length > 0 && !hasExported.current) {
       hasExported.current = true;
       setIsExporting(true);
 
-      setTimeout(() => {
-        handleDownloadPdf();
-      }, 500); // small delay to ensure DOM updates
-
-      setTimeout(() => {
-        setIsExporting(false);
-      }, 1500);
+      handleDownloadPdf(setIsExporting, setExportProgress, startDate, endDate); // null for all employees
     }
-  }, [loading, employeesData]);
-
-  if (loading)
-    return (
-      <>
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/70 backdrop-blur-sm print:hidden">
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-accent border-t-transparent" />
-            <span className="text-gray-600 text-sm">Generating report…</span>
-          </div>
-        </div>
-      </>
-    );
+  }, [employeesData]);
 
   let isGeneral = shift_type_id != 2 && shift_type_id != 5;
   let pairLength = shift_type_id == 2 ? 5 : 2; // 5 pairs for multi and 2 pairs for split
 
   return (
     <>
+      {isExporting && (
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
+          <div class="spinner-wrapper">
+            <div class="spinner-container">
+              <div class="outer-spin-bars">
+                <div class="bar bar-1"></div>
+                <div class="bar bar-2"></div>
+                <div class="bar bar-3"></div>
+              </div>
+
+              <div class="spinner-progress" id="progressRing"></div>
+
+              <div class="spinner-circle"></div>
+
+              <div class="spinner-inner-circle" id="percentText">
+                {exportProgress}%
+              </div>
+
+              <div class="progress-loader" id="statusText">
+                {exportProgress < 100 ? "Preparing……" : "Ready!"}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center">
         <div className="w-full max-w-[1122px] printable">
           {employeesData.map((employeeBlock, empIndex) => {
             const pages = paginateTableData(
               employeeBlock.records,
-              isGeneral ? 15 : 5,
-              isGeneral ? 16 : 8
+              isGeneral ? 5 : 5,
+              isGeneral ? 8 : 8
             );
 
-            return pages.map((pageData, pageIndex) => (
-              <div
-                key={`${employeeBlock.employee_id}-${pageIndex}`}
-                className="pdf-page-section relative bg-white shadow-2xl print:shadow-none
-                 p-4 flex flex-col gap-6
+            return pages.map((pageData, pageIndex) => {
+              const isLastPage = pageIndex === pages.length - 1;
+
+              return (
+                <div
+                  key={`${employeeBlock.employee_id}-${pageIndex}`}
+                  className="pdf-page-section relative bg-white shadow-2xl print:shadow-none
+                 p-3 flex flex-col gap-6
                  border-t-8 border-accent
                  print:mb-0 page-break-after"
-                data-employee={employeeBlock.employee_id}
-              >
-                <Header
-                  isExporting={isExporting}
-                  from_date={from_date}
-                  to_date={to_date}
-                  company_name={company_name}
-                />
+                  data-employee={employeeBlock.employee_id}
+                >
+                  <Header
+                    isExporting={isExporting}
+                    from_date={from_date}
+                    to_date={to_date}
+                    company_name={company_name}
+                  />
 
-                {pageIndex == 0 ? (
-                  <>
-                    <ProfileAndHighlights
-                      isExporting={isExporting}
-                      employee={employeeBlock.records[0]?.employee}
-                      totalHours={calculateTotalHours(
-                        employeeBlock.records
-                          .filter((e) => e.total_hrs !== "---")
-                          .map((r) => r.total_hrs)
-                      )}
-                      lateIn={calculateTotalHours(
-                        employeeBlock.records
-                          .filter((e) => e.late_coming !== "---")
-                          .map((r) => r.late_coming)
-                      )}
-                      OT={calculateTotalHours(
-                        employeeBlock.records
-                          .filter((e) => e.ot !== "---")
-                          .map((r) => r.ot)
-                      )}
+                  {pageIndex == 0 ? (
+                    <>
+                      <ProfileAndHighlights
+                        isExporting={isExporting}
+                        employee={employeeBlock.records[0]?.employee}
+                        totalHours={calculateTotalHours(
+                          employeeBlock.records
+                            .filter((e) => e.total_hrs !== "---")
+                            .map((r) => r.total_hrs)
+                        )}
+                        lateIn={calculateTotalHours(
+                          employeeBlock.records
+                            .filter((e) => e.late_coming !== "---")
+                            .map((r) => r.late_coming)
+                        )}
+                        OT={calculateTotalHours(
+                          employeeBlock.records
+                            .filter((e) => e.ot !== "---")
+                            .map((r) => r.ot)
+                        )}
+                      />
+                      <Stats
+                        isExporting={isExporting}
+                        stats={employeeBlock.records}
+                      />
+                    </>
+                  ) : null}
+
+                  {isGeneral ? (
+                    <GeneralTable
+                      isGeneral={isGeneral}
+                      pageIndex={pageIndex}
+                      data={pageData}
                     />
-                    <Stats isExporting={isExporting} stats={employeeBlock.records} />
-                  </>
-                ) : null}
+                  ) : (
+                    <Table
+                      pairLength={pairLength}
+                      pageIndex={pageIndex}
+                      data={pageData}
+                    />
+                  )}
 
-                {isGeneral ? (
-                  <GeneralTable
-                    isGeneral={isGeneral}
-                    pageIndex={pageIndex}
-                    data={pageData}
-                  />
-                ) : (
-                  <Table
-                    pairLength={pairLength}
-                    pageIndex={pageIndex}
-                    data={pageData}
-                  />
-                )}
+                  {isLastPage ? <div className="min-h-[380px]"></div> : null}
 
-                <Footer page={pageIndex + 1} totalPages={pages.length} />
-              </div>
-            ));
+                  <Footer page={pageIndex + 1} totalPages={pages.length} />
+                </div>
+              );
+            });
           })}
         </div>
       </div>

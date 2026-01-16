@@ -5,27 +5,45 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
   return (
     <div
       className={`flex flex-col gap-10 
-        h-[${pageIndex == 0 ? "350px" : "500px"}]
+        h-[${pageIndex == 0 ? "350px" : "800px"}]
         `}
     >
       <div className="border border-slate-200 rounded-xl bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 text-xs uppercase font-semibold text-slate-500 tracking-wider">
-              <tr>
-                <th className="px-4 py-3 border-b w-28">Date</th>
-                <th className="px-4 py-3 border-b">Shift Details</th>
-                <th className="px-4 py-3 border-b">In Time</th>
-                <th className="px-4 py-3 border-b">Out Time</th>
-                <th className="px-4 py-3 border-b text-center">
-                  Late hours
+              <tr className="">
+                <th className="p-1 border-b relative h-8 w-28">
+                  <div className="absolute top-[0px] left-[30px]">Date</div>
                 </th>
-                <th className="px-4 py-3 border-b text-center text-amber-600">
-                  Early Go
+                <th className="p-1 border-b relative">
+                  <div className="absolute top-[0px] left-[30px]">Shift</div>
                 </th>
-                <th className="px-4 py-3 border-b text-center">Overtime</th>
-                <th className="px-4 py-3 border-b text-center">Work Hrs</th>
-                <th className="px-4 py-3 border-b text-center">Status</th>
+                <th className="p-1 border-b relative">
+                  <div className="absolute top-[0px]">In Time</div>
+                </th>
+
+                <th className="p-1 border-b relative">
+                  <div className="absolute top-[0px]">Out Time</div>
+                </th>
+
+                <th className="p-1 border-b relative">
+                  <div className="absolute top-[0px]">Late hours</div>
+                </th>
+
+                <th className="p-1 border-b relative">
+                  <div className="absolute top-[0px]">Early Go</div>
+                </th>
+
+                <th className="p-1 border-b relative text-center">
+                  <div className="absolute top-[0px]">Overtime</div>
+                </th>
+                <th className="p-1 border-b relative text-center">
+                  <div className="absolute top-[0px]">Total Hours</div>
+                </th>
+                <th className="p-1 border-b relative text-center">
+                  <div className="absolute top-[0px] left-[50px]">Status</div>
+                </th>
               </tr>
             </thead>
 
@@ -33,20 +51,22 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
               {data.map((row, rowIndex) => (
                 <tr
                   key={`${rowIndex}`}
-                  className={`hover:bg-slate-50 transition-colors ${row.status === "A"
-                    ? "bg-rose-100/50"
-                    : row.day === "Sunday"
+                  className={`hover:bg-slate-50 transition-colors ${
+                    row.status === "A"
+                      ? "bg-rose-100/50"
+                      : row.day === "Sunday"
                       ? "bg-amber-100/50"
                       : ""
-                    }`}
+                  }`}
                 >
                   <td className="px-4 py-3">
                     <div className="font-bold">{row.date}</div>
                     <div
-                      className={`text-xs ${row.status === "H"
-                        ? "text-amber-600 font-semibold"
-                        : "text-slate-500"
-                        }`}
+                      className={`text-xs ${
+                        row.status === "H"
+                          ? "text-amber-600 font-semibold"
+                          : "text-slate-500"
+                      }`}
                     >
                       {row.day}
                     </div>
@@ -80,10 +100,10 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
                   </td>
 
                   <td className="px-4 py-3 text-center font-mono">
-                    {row.status === "P" && (
+                    {["P", "EG", "LC"].includes(row.status) && (
                       <span
-                        className="relative h-[30px] w-[60px] inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
-        bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center justify-center rounded text-[11px] font-bold
+               bg-emerald-50 text-emerald-700 border border-emerald-200"
                       >
                         <span style={{ position: "absolute", top: "-2px" }}>
                           Present
@@ -91,19 +111,30 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
                       </span>
                     )}
 
-                    {row.status === "A" && (
+                    {["A", "L", "H", "ME"].includes(row.status) && (
                       <span
-                        className="relative h-[30px] w-[60px] inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold
+                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center  rounded text-[11px] font-bold
         bg-rose-50 text-rose-700 border border-rose-200"
                       >
                         <span
                           style={{
                             position: "absolute",
-                            top: "-2px",
+                            top: "-3px",
                             left: "11px",
                           }}
                         >
                           Absent
+                        </span>
+                      </span>
+                    )}
+
+                    {row.status === "M" && (
+                      <span
+                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center justify-center rounded text-[11px] font-bold
+                 bg-gray-100 text-gray-700 border border-gray-300"
+                      >
+                        <span style={{ position: "absolute", top: "-2px" }}>
+                          Incomplete
                         </span>
                       </span>
                     )}

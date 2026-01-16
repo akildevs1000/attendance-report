@@ -1,17 +1,18 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-/**
- * @param {string|null} employeeId
- *  - null  → merge ALL employees into ONE PDF
- *  - value → export ONLY that employee
- */
-const handleDownloadPdf = async (employeeId = null) => {
+const getDate = (dateStr) => {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(dateStr));
+};
+
+const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from, to) => {
   const pdf = new jsPDF("landscape", "pt", "a4");
 
-  const selector = employeeId
-    ? `.pdf-page-section[data-employee="${employeeId}"]`
-    : `.pdf-page-section`;
+  const selector = `.pdf-page-section`;
 
   const pdfPages = document.querySelectorAll(selector);
 
@@ -42,13 +43,23 @@ const handleDownloadPdf = async (employeeId = null) => {
       undefined,
       "FAST"
     );
+
+
+    // Update progress
+    if (setProgress) {
+      const percent = Math.round(((i + 1) / pdfPages.length) * 100);
+      setProgress(percent);
+    }
   }
 
-  const fileName = employeeId
-    ? `attendance_employee_${employeeId}.pdf`
-    : `monthly-attendance-report.pdf`;
+  const fileName = `Attendance-Report-${getDate(from)}-to-${getDate(to)}.pdf`;
 
   pdf.save(fileName);
+
+  setTimeout(() => {
+    if (setIsExporting) setIsExporting(false); // end overlay after PDF is done
+  }, 2000)
+
 };
 
 export default handleDownloadPdf;

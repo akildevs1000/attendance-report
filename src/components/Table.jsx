@@ -14,22 +14,22 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
           <table className="w-full text-left text-sm border-collapse m-0">
             <thead className=" bg-slate-50 text-xs uppercase font-semibold text-slate-500 tracking-wider">
               <tr className="">
-                <th className="p-2 border-b relative h-8 w-28">
+                <th className="p-1 border-b relative h-8 w-28">
                   <div className="absolute top-[0px]">Date</div>
                 </th>
-                <th className="p-2 border-b relative">
+                <th className="p-1 border-b relative">
                   <div className="absolute top-[0px]">Shift</div>
                 </th>
-                <th className="p-2 border-b relative">
+                <th className="p-1 border-b relative w-[550px]">
                   <div className="absolute top-[0px]">Punch Records</div>
                 </th>
-                <th className="p-2 border-b relative text-center">
+                <th className="p-1 border-b relative text-center">
                   <div className="absolute top-[0px]">OT</div>
                 </th>
-                <th className="p-2 border-b relative text-center">
+                <th className="p-1 border-b relative text-center">
                   <div className="absolute top-[0px]">T.Hrs</div>
                 </th>
-                <th className="p-2 border-b relative text-center">
+                <th className="p-1 border-b relative text-center">
                   <div className="absolute top-[0px]">Status</div>
                 </th>
               </tr>
