@@ -85,32 +85,34 @@ const App = () => {
   return (
     <>
       {isExporting && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
-          <div class="spinner-wrapper">
-            <div class="spinner-container">
-              <div class="outer-spin-bars">
-                <div class="bar bar-1"></div>
-                <div class="bar bar-2"></div>
-                <div class="bar bar-3"></div>
-              </div>
+        <></>
+        // <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
+        //   <div class="spinner-wrapper">
+        //     <div class="spinner-container">
+        //       <div class="outer-spin-bars">
+        //         <div class="bar bar-1"></div>
+        //         <div class="bar bar-2"></div>
+        //         <div class="bar bar-3"></div>
+        //       </div>
 
-              <div class="spinner-progress" id="progressRing"></div>
+        //       <div class="spinner-progress" id="progressRing"></div>
 
-              <div class="spinner-circle"></div>
+        //       <div class="spinner-circle"></div>
 
-              <div class="spinner-inner-circle" id="percentText">
-                {exportProgress}%
-              </div>
+        //       <div class="spinner-inner-circle" id="percentText">
+        //         {exportProgress}%
+        //       </div>
 
-              <div class="progress-loader" id="statusText">
-                {exportProgress < 100 ? "Preparing……" : "Ready!"}
-              </div>
-            </div>
-          </div>
-        </div>
+        //       <div class="progress-loader" id="statusText">
+        //         {exportProgress < 100 ? "Preparing……" : "Ready!"}
+        //       </div>
+        //     </div>
+        //   </div>
+        // </div>
       )}
 
-      <div className="bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center">
+      <div className={`bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center
+    ${isExporting ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
         <div className="w-full max-w-[1122px] printable">
           {employeesData.map((employeeBlock, empIndex) => {
             const pages = paginateTableData(

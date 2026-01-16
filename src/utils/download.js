@@ -48,6 +48,7 @@ const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from
     // Update progress
     if (setProgress) {
       const percent = Math.round(((i + 1) / pdfPages.length) * 100);
+      window.parent.postMessage({ type: 'EXPORT_STATUS', status: false, progress: percent }, '*');
       setProgress(percent);
     }
   }
@@ -58,6 +59,10 @@ const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from
 
   setTimeout(() => {
     if (setIsExporting) setIsExporting(false); // end overlay after PDF is done
+
+    if (window.parent) {
+      window.parent.postMessage({ type: 'EXPORT_STATUS', status: true, progress: percent }, '*');
+    }
   }, 2000)
 
 };
