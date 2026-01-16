@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Parent Page</title>
+</head>
+
+<body>
+  <div id="status">Progress 0</div>
+
+  <!-- Iframe pointing to your report page -->
+  <iframe
+    src="http://localhost:5717/attendance-report/?employee_ids=225&company_id=22&from_date=2025-12-01&to_date=2025-12-31&shift_type_id=2&company_name=V%20PERFUMES"
+    id="reportIframe" width="100%" height="800px" style="border:none; overflow:hidden;" scrolling="no"></iframe>
+
+
+  <script>
+    const statusEl = document.getElementById('status');
+
+    // Listen for messages from iframe
+    window.addEventListener('message', (event) => {
+      const data = event.data;
+
+      if (data.type === 'EXPORT_STATUS') {
+        statusEl.textContent = `Progress: ${data.progress || 0}%`;
+      }
+    });
+  </script>
+
+</body>
+
+</html>
