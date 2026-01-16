@@ -50,8 +50,10 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                   <td className="p-1 ">
                     <div className="font-bold">{row.date}</div>
                     <div
-                      className={`text-xs ${
-                        row.status === "H"
+                      className={`text-xs font-medium ${
+                        row.day === "Sunday"
+                          ? "text-rose-700"
+                          : row.status === "H"
                           ? "text-amber-600 font-semibold"
                           : "text-slate-500"
                       }`}
@@ -71,52 +73,52 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
 
                   <td className="p-1 ">
                     <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
-                      {row.logs ? (
-                        row.logs.slice(0, pairLength).map((log, index) => {
-                          console.log(
-                            "log.total_minutes:",
-                            log.total_minutes,
-                            "Index:",
-                            index
-                          );
+                      {row.logs
+                        ? row.logs.slice(0, pairLength).map((log, index) => {
+                            console.log(
+                              "log.total_minutes:",
+                              log.total_minutes,
+                              "Index:",
+                              index
+                            );
 
-                          return (
-                            <React.Fragment key={index}>
-                              <div className="flex flex-col bg-white border border-slate-200 rounded-md overflow-hidden shadow-sm min-w-[110px]">
-                                <div className="px-2 py-1 text-xs font-mono text-slate-700 border-b border-slate-100 flex justify-center items-center">
-                                  {/* Left Section: IN */}
-                                  <span className="text-center leading-tight">
-                                    {log.in}
-                                    {/* <br />
+                            return (
+                              <React.Fragment key={index}>
+                                <div className="flex flex-col bg-white border border-slate-200 rounded-md overflow-hidden shadow-sm min-w-[110px]">
+                                  <div className="px-2 py-1 text-xs font-mono text-slate-700 border-b border-slate-100 flex justify-center items-center">
+                                    {/* Left Section: IN */}
+                                    <span className="text-center leading-tight">
+                                      {log.in}
+                                      {/* <br />
                                       <small className="block text-slate-400">
                                         {log.device_in}
                                       </small> */}
-                                  </span>
+                                    </span>
 
-                                  {/* Arrow */}
-                                  <span className="text-slate-300 mx-2">→</span>
+                                    {/* Arrow */}
+                                    <span className="text-slate-300 mx-2">
+                                      →
+                                    </span>
 
-                                  {/* Right Section: OUT */}
-                                  <span className="text-center leading-tight">
-                                    {log.out}
-                                    {/* <br />
+                                    {/* Right Section: OUT */}
+                                    <span className="text-center leading-tight">
+                                      {log.out}
+                                      {/* <br />
                                       <small className="block text-slate-400">
                                         {log.device_out}
                                       </small> */}
-                                  </span>
+                                    </span>
+                                  </div>
+                                  <div className="px-2 py-1 text-[10px] font-mono text-slate-500 bg-slate-50 text-center">
+                                    {formatMinutesToHHMM(
+                                      log.total_minutes || 0
+                                    )}
+                                  </div>
                                 </div>
-                                <div className="px-2 py-1 text-[10px] font-bold font-mono text-slate-500 bg-slate-50 text-center">
-                                  {formatMinutesToHHMM(log.total_minutes || 0)}
-                                </div>
-                              </div>
-                            </React.Fragment>
-                          );
-                        })
-                      ) : (
-                        <div class="text-xs text-slate-400 italic pt-1">
-                          No punch records found
-                        </div>
-                      )}
+                              </React.Fragment>
+                            );
+                          })
+                        : null}
                     </div>
                   </td>
 

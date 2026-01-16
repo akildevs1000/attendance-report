@@ -83,9 +83,17 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
 
                   <td className="px-4 py-3 font-medium text-slate-600">
                     {row.in}
+                      <br />
+                                      <small className="block text-slate-400">
+                                        {row.device_in}
+                                      </small>
                   </td>
                   <td className="px-4 py-3 font-medium text-slate-600">
                     {row.out}
+                        <br />
+                                      <small className="block text-slate-400">
+                                        {row.device_out}
+                                      </small>
                   </td>
                   <td className="px-4 py-3 text-center font-mono">
                     {row.late_coming}
