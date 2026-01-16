@@ -15,10 +15,10 @@ function Table({ isGeneral, data = [], pageIndex = 0 }) {
             <thead className="bg-slate-50 text-xs uppercase font-semibold text-slate-500 tracking-wider">
               <tr>
                 <th className="p-2 border-b w-28">Date</th>
-                <th className="p-2 border-b">Shift Details</th>
+                <th className="p-2 border-b">Shift</th>
                 <th className="p-2 border-b">Punch Records</th>
-                <th className="p-2 border-b text-center">Overtime</th>
-                <th className="p-2 border-b text-center">Work Hrs</th>
+                <th className="p-2 border-b text-center">OT</th>
+                <th className="p-2 border-b text-center">T.Hrs</th>
                 <th className="p-2 border-b text-center">Status</th>
               </tr>
             </thead>
@@ -56,7 +56,7 @@ function Table({ isGeneral, data = [], pageIndex = 0 }) {
                   </td>
 
                   <td className="px-4 py-3 align-top">
-                    <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 max-w-[500px]">
+                    <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
                       {row.logs &&
                         row.logs.map((log, index) => {
                           console.log("log:", log, "Index:", index);
