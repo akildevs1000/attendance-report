@@ -25,3 +25,36 @@ export function calculateTotalHours(times) {
     total: `${hours}h ${minutes}m` // human-readable format
   };
 }
+
+
+export function calculateAttendanceScore(shift, daysInMonth, performedHours = 0) {
+  if (!shift?.working_hours) {
+    return {
+      expected_hours: 0,
+      performed_hours: performedHours,
+      score_percentage: 0
+    };
+  }
+
+  // Convert "HH:MM" → hours
+  const [h, m] = shift.working_hours.split(":").map(Number);
+  const dailyHours = h + m / 60;
+
+  const flexiHolidays = Number(shift.monthly_flexi_holidays || 0);
+  const workingDays = daysInMonth - flexiHolidays;
+
+  const expectedHours = workingDays * dailyHours;
+
+  const scorePercentage =
+    expectedHours > 0
+      ? Number(((performedHours / expectedHours) * 100).toFixed(2))
+      : 0;
+
+  return {
+    expected_hours: Number(expectedHours.toFixed(2)),
+    performed_hours: Number(performedHours.toFixed(2)),
+    score_percentage: scorePercentage
+  };
+}
+
+

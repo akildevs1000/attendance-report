@@ -1,3 +1,5 @@
+import { calculateAttendanceScore } from "../utils/time";
+
 function ProfileAndHighlights({
   isExporting,
   employee,
@@ -5,8 +7,19 @@ function ProfileAndHighlights({
   lateIn,
   OT,
 }) {
+  let shift = employee?.schedule?.shift;
+
+  // 👇 Use totalHours.hours as performed hours
+  const result = calculateAttendanceScore(
+    shift,
+    31,
+    Number(totalHours?.hours || 0)
+  );
+
+  console.log(result);
+
   let highlights = [
-    { label: "Score", val: "92%" },
+    { label: "Score", val: result?.score_percentage + "%" },
     { label: "Worked", val: totalHours?.hours, unit: "h" },
     {
       label: "Late In",
@@ -23,10 +36,6 @@ function ProfileAndHighlights({
       labelColor: "text-indigo-500",
     },
   ];
-
-  let workingHours = employee?.schedule?.shift?.working_hours;
-
-  console.log(`workingHours: `, workingHours);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -45,17 +54,17 @@ function ProfileAndHighlights({
         <div className="flex-1 min-w-0 z-10">
           <h3
             className={`text-lg font-bold text-slate-900 truncate ${
-              isExporting ? "-mt-6 pb-[1px]" : ""
+              isExporting ? "-mt-4 pb-[1px]" : ""
             }`}
           >
-            {employee?.first_name}
+            {employee?.first_name} {employee?.last_name}
           </h3>
-          <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">
+          <p className="text-xs font-semibold  uppercase tracking-wider mb-1">
             ID: {employee?.employee_id}
           </p>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            {/* <span className="truncate">Dept: {employee?.department?.name}</span> */}
-          </div>
+          <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">
+            Dept: {employee?.department?.name}
+          </p>
         </div>
       </div>
 
