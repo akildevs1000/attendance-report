@@ -1,8 +1,6 @@
 import { STATUS_MAP } from "../utils/helper";
 
-
-function GeneralTable({ data = [], pageIndex = 0 }) {
-
+function GeneralTable({ halfday, working_hours, data = [], pageIndex = 0 }) {
   return (
     <div
       className={`flex flex-col gap-10 
@@ -115,7 +113,12 @@ function GeneralTable({ data = [], pageIndex = 0 }) {
                bg-emerald-50 text-emerald-700 border border-emerald-200"
                       >
                         <span style={{ position: "absolute", top: "-2px" }}>
-                          Present
+                          Present{" "}
+                          {checkShortShift(
+                            halfday,
+                            working_hours,
+                            row.total_hrs
+                          )}
                         </span>
                       </span>
                     )}

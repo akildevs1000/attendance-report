@@ -2,10 +2,9 @@ import React from "react";
 
 import { formatMinutesToHHMM } from "../utils/date";
 import { STATUS_MAP } from "../utils/helper";
+import { checkShortShift } from "../utils/time";
 
-function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
-  console.log(data);
-
+function Table({ halfday, working_hours, pairLength = 5, data = [], pageIndex = 0 }) {
   return (
     <div
       className={`flex flex-col gap-10 
@@ -43,11 +42,7 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                 <tr
                   key={`${rowIndex}`}
                   className={`hover:bg-slate-50 transition-colors ${
-                    row.status === "A"
-                      ? "bg-rose-100/50"
-                      : row.day === "Sunday"
-                      ? "bg-amber-100/50"
-                      : ""
+                    row.day === "Sunday" ? "bg-amber-100/50" : ""
                   }`}
                 >
                   <td className="p-1 ">
@@ -132,7 +127,12 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                bg-emerald-50 text-emerald-700 border border-emerald-200"
                       >
                         <span style={{ position: "absolute", top: "-2px" }}>
-                          Present
+                          Present{" "}
+                          {checkShortShift(
+                            halfday,
+                            working_hours,
+                            row.total_hrs
+                          )}
                         </span>
                       </span>
                     )}
@@ -165,6 +165,7 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                         </span>
                       </span>
                     )}
+
                   </td>
                 </tr>
               ))}

@@ -125,6 +125,8 @@ const App = () => {
 
             return pages.map((pageData, pageIndex) => {
               const isLastPage = pageIndex === pages.length - 1;
+              let { halfday, working_hours } =
+                employeeBlock?.employee?.schedule?.shift;
 
               return (
                 <div
@@ -166,12 +168,16 @@ const App = () => {
 
                   {isGeneral ? (
                     <GeneralTable
+                      halfday={halfday}
+                      working_hours={working_hours}
                       isGeneral={isGeneral}
                       pageIndex={pageIndex}
                       data={pageData}
                     />
                   ) : (
                     <Table
+                      halfday={halfday}
+                      working_hours={working_hours}
                       pairLength={pairLength}
                       pageIndex={pageIndex}
                       data={pageData}
