@@ -51,11 +51,7 @@ function GeneralTable({ halfday, working_hours, data = [], pageIndex = 0 }) {
                 <tr
                   key={`${rowIndex}`}
                   className={`hover:bg-slate-50 transition-colors ${
-                    row.status === "A"
-                      ? "bg-rose-100/50"
-                      : row.day === "Sunday"
-                      ? "bg-amber-100/50"
-                      : ""
+                    row.day === "Sunday" ? "bg-amber-100/50" : ""
                   }`}
                 >
                   <td className="px-4 py-3">
