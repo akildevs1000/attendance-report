@@ -1,8 +1,5 @@
 function Stats({ stats, isExporting }) {
 
-  console.log(stats.filter(e => e.total_hrs != "---").map(e => e.total_hrs));
-  
-  // Count occurrences of each status
   const statusCounts = stats.reduce((acc, s) => {
     acc[s.status] = (acc[s.status] || 0) + 1;
     return acc;

@@ -16,8 +16,6 @@ function ProfileAndHighlights({
     Number(totalHours?.hours || 0)
   );
 
-  console.log(result);
-
   let highlights = [
     { label: "Score", val: result?.score_percentage + "%" },
     { label: "Worked", val: totalHours?.hours, unit: "h" },

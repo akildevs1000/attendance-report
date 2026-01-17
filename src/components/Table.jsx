@@ -1,8 +1,11 @@
 import React from "react";
 
 import { formatMinutesToHHMM } from "../utils/date";
+import { STATUS_MAP } from "../utils/helper";
 
 function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
+  console.log(data);
+
   return (
     <div
       className={`flex flex-col gap-10 
@@ -75,13 +78,6 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                     <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
                       {row.logs
                         ? row.logs.slice(0, pairLength).map((log, index) => {
-                            console.log(
-                              "log.total_minutes:",
-                              log.total_minutes,
-                              "Index:",
-                              index
-                            );
-
                             return (
                               <React.Fragment key={index}>
                                 <div className="flex flex-col bg-white border border-slate-200 rounded-md overflow-hidden shadow-sm min-w-[110px]">
@@ -130,24 +126,18 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                   </td>
 
                   <td className="p-1 text-center font-mono">
-                    {row.status === "P" && (
+                    {["P", "EG", "LC"].includes(row.status) && (
                       <span
-                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center  rounded text-[11px] font-bold
-        bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center justify-center rounded text-[11px] font-bold
+               bg-emerald-50 text-emerald-700 border border-emerald-200"
                       >
-                        <span
-                          style={{
-                            position: "absolute",
-                            top: "-3px",
-                            left: "8px",
-                          }}
-                        >
+                        <span style={{ position: "absolute", top: "-2px" }}>
                           Present
                         </span>
                       </span>
                     )}
 
-                    {row.status === "A" && (
+                    {["A"].includes(row.status) && (
                       <span
                         className="relative h-[30px] w-[60px] mt-2 inline-flex items-center  rounded text-[11px] font-bold
         bg-rose-50 text-rose-700 border border-rose-200"
@@ -160,6 +150,18 @@ function Table({ pairLength = 5, data = [], pageIndex = 0 }) {
                           }}
                         >
                           Absent
+                        </span>
+                      </span>
+                    )}
+
+                    {STATUS_MAP[row.status] && (
+                      <span
+                        className="relative h-[30px] w-[70px] mt-2 inline-flex items-center justify-center
+               rounded text-[11px] font-bold
+               bg-gray-100 text-gray-700 border border-gray-300"
+                      >
+                        <span className="absolute -top-[2px]">
+                          {STATUS_MAP[row.status]}
                         </span>
                       </span>
                     )}

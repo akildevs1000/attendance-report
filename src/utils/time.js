@@ -58,3 +58,36 @@ export function calculateAttendanceScore(shift, daysInMonth, performedHours = 0)
 }
 
 
+
+
+export const checkShortShift = (halfday, working_hours, total_hrs) => {
+  // Validate inputs
+  if (
+    !working_hours ||
+    !total_hrs ||
+    working_hours === "---" ||
+    total_hrs === "---"
+  ) {
+    return null;
+  }
+
+  // Check if today is NOT half day
+  const isHalfDay =
+    new Date().toLocaleString("en-US", { weekday: "long" }) === halfday;
+
+  // Convert HH:mm → minutes
+  const toMinutes = (time) => {
+    const [h, m] = time.split(":").map(Number);
+    return h * 60 + m;
+  };
+
+  const shiftMinutes = toMinutes(working_hours);
+  const employeeMinutes = toMinutes(total_hrs);
+
+  // Short shift only if employee worked less and it's NOT half day
+  if (employeeMinutes < shiftMinutes && !isHalfDay) {
+    return "*";
+  }
+
+  return null;
+};

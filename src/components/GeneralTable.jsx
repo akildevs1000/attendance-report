@@ -1,4 +1,8 @@
+import { STATUS_MAP } from "../utils/helper";
+
+
 function GeneralTable({ data = [], pageIndex = 0 }) {
+
   return (
     <div
       className={`flex flex-col gap-10 
@@ -116,7 +120,7 @@ function GeneralTable({ data = [], pageIndex = 0 }) {
                       </span>
                     )}
 
-                    {["A", "L", "H", "ME"].includes(row.status) && (
+                    {["A"].includes(row.status) && (
                       <span
                         className="relative h-[30px] w-[60px] mt-2 inline-flex items-center  rounded text-[11px] font-bold
         bg-rose-50 text-rose-700 border border-rose-200"
@@ -133,13 +137,14 @@ function GeneralTable({ data = [], pageIndex = 0 }) {
                       </span>
                     )}
 
-                    {row.status === "M" && (
+                    {STATUS_MAP[row.status] && (
                       <span
-                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center justify-center rounded text-[11px] font-bold
-                 bg-gray-100 text-gray-700 border border-gray-300"
+                        className="relative h-[30px] w-[60px] mt-2 inline-flex items-center justify-center
+               rounded text-[11px] font-bold
+               bg-gray-100 text-gray-700 border border-gray-300"
                       >
-                        <span style={{ position: "absolute", top: "-2px" }}>
-                          Incomplete
+                        <span className="absolute -top-[2px]">
+                          {STATUS_MAP[row.status]}
                         </span>
                       </span>
                     )}
