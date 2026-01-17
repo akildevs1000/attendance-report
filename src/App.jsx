@@ -86,7 +86,7 @@ const App = () => {
   return (
     <>
       {isExporting && (
-        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center  backdrop-blur-sm print:hidden">
           <div className="spinner-wrapper">
             <div className="spinner-container">
               <div className="outer-spin-bars">

@@ -1,33 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+    <title>Attendance Report</title>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Parent Page</title>
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
 
-<body>
-  <div id="status">Progress 0</div>
-
-  <!-- Iframe pointing to your report page -->
-  <iframe
-    src="http://localhost:5717/attendance-report/?employee_ids=225&company_id=22&from_date=2025-12-01&to_date=2025-12-31&shift_type_id=2&company_name=V%20PERFUMES"
-    id="reportIframe" width="100%" height="800px" style="border:none; overflow:hidden;" scrolling="no"></iframe>
-
-
-  <script>
-    const statusEl = document.getElementById('status');
-
-    // Listen for messages from iframe
-    window.addEventListener('message', (event) => {
-      const data = event.data;
-
-      if (data.type === 'EXPORT_STATUS') {
-        statusEl.textContent = `Progress: ${data.progress || 0}%`;
+    <style>
+      /* This ensures the background main page is visible through the overlay */
+      .v-overlay--active {
+        opacity: 0.4 !important; /* Adjust darkness of background here */
       }
-    });
-  </script>
+      .report-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .close-btn-floating {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-main class="pa-10">
+          <h1>Main Dashboard</h1>
+          <p>The report will open in a modal overlay above this text.</p>
 
-</body>
+          <v-btn color="primary" @click="dialog = true">
+            Open Attendance Report
+          </v-btn>
 
+          <v-dialog v-model="dialog" persistent content-class="elevation-0">
+            <iframe
+              v-if="dialog"
+              :src="iframeSrc"
+              height="300px"
+              width="100%"
+              scrolling="no"
+              style="border: none; display: block"
+            ></iframe>
+          </v-dialog>
+        </v-main>
+      </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data() {
+          return {
+            dialog: false,
+            progress: 0,
+            iframeSrc:
+              "http://localhost:5717/attendance-report/?employee_ids=225&company_id=22&from_date=2025-12-01&to_date=2025-12-31&shift_type_id=2&company_name=V%20PERFUMES",
+          };
+        },
+        mounted() {
+          window.addEventListener("message", this.handleMessage);
+        },
+        beforeDestroy() {
+          window.removeEventListener("message", this.handleMessage);
+        },
+        methods: {
+          closeReport() {
+            this.dialog = false;
+            this.progress = 0;
+          },
+          handleMessage(event) {
+            const data = event.data;
+
+            if (data && data.type === "EXPORT_STATUS") {
+              this.progress = data.progress || 0;
+
+              // Auto-hide/reset when finished
+              if (this.progress >= 100) {
+                setTimeout(() => {
+                  this.closeReport();
+                }, 1000);
+              }
+            }
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
