@@ -1,7 +1,4 @@
-import React from "react";
-import { formatMinutesToHHMM } from "../utils/date";
-
-function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
+function GeneralTable({ data = [], pageIndex = 0 }) {
   return (
     <div
       className={`flex flex-col gap-10 
@@ -83,17 +80,17 @@ function GeneralTable({ isGeneral, data = [], pageIndex = 0 }) {
 
                   <td className="px-4 py-3 font-medium text-slate-600">
                     {row.in}
-                      <br />
-                                      <small className="block text-slate-400">
-                                        {row.device_in}
-                                      </small>
+                    <br />
+                    <small className="block text-slate-400">
+                      {row.device_in?.name}
+                    </small>
                   </td>
                   <td className="px-4 py-3 font-medium text-slate-600">
                     {row.out}
-                        <br />
-                                      <small className="block text-slate-400">
-                                        {row.device_out}
-                                      </small>
+                    <br />
+                    <small className="block text-slate-400">
+                      {row.device_out?.name}
+                    </small>
                   </td>
                   <td className="px-4 py-3 text-center font-mono">
                     {row.late_coming}

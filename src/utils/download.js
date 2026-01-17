@@ -9,6 +9,8 @@ const getDate = (dateStr) => {
   }).format(new Date(dateStr));
 };
 
+
+
 const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from, to) => {
   const pdf = new jsPDF("landscape", "pt", "a4");
 
@@ -16,11 +18,13 @@ const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from
 
   const pdfPages = document.querySelectorAll(selector);
 
+  let percent = 0;
+
   for (let i = 0; i < pdfPages.length; i++) {
     const canvas = await html2canvas(pdfPages[i], {
       scale: 2,
       useCORS: true,
-      logging: true,
+      logging: false,
       scrollY: -window.scrollY, // prevents page scroll from adding space
     });
 
@@ -47,7 +51,7 @@ const handleDownloadPdf = async (setIsExporting = null, setProgress = null, from
 
     // Update progress
     if (setProgress) {
-      const percent = Math.round(((i + 1) / pdfPages.length) * 100);
+      percent = Math.round(((i + 1) / pdfPages.length) * 100);
       window.parent.postMessage({ type: 'EXPORT_STATUS', status: false, progress: percent }, '*');
       setProgress(percent);
     }

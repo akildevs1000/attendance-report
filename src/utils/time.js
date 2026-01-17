@@ -10,7 +10,7 @@ export function calculateTotalHours(times) {
   let totalMinutes = 0;
 
   times.forEach(time => {
-    if (time && time !== "00:00") {
+    if (time && time !== "---") {
       const [hours, minutes] = time.split(":").map(Number);
       totalMinutes += hours * 60 + minutes;
     }

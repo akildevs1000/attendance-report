@@ -4,7 +4,6 @@ function ProfileAndHighlights({
   totalHours,
   lateIn,
   OT,
-  workingHours
 }) {
   let highlights = [
     { label: "Score", val: "92%" },
@@ -25,6 +24,10 @@ function ProfileAndHighlights({
     },
   ];
 
+  let workingHours = employee?.schedule?.shift?.working_hours;
+
+  console.log(`workingHours: `, workingHours);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-row items-center gap-4 relative overflow-hidden">
@@ -38,14 +41,14 @@ function ProfileAndHighlights({
             }}
           ></div>
         </div>
-       
+
         <div className="flex-1 min-w-0 z-10">
           <h3
             className={`text-lg font-bold text-slate-900 truncate ${
               isExporting ? "-mt-6 pb-[1px]" : ""
             }`}
           >
-            {employee?.first_name} - {workingHours}
+            {employee?.first_name}
           </h3>
           <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-1">
             ID: {employee?.employee_id}

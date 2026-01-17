@@ -54,6 +54,7 @@ const App = () => {
             results.push({
               employee_id: empId,
               records: empData,
+              employee: empData[0]?.employee || null,
             });
           }
         }
@@ -85,34 +86,35 @@ const App = () => {
   return (
     <>
       {isExporting && (
-        <></>
-        // <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
-        //   <div class="spinner-wrapper">
-        //     <div class="spinner-container">
-        //       <div class="outer-spin-bars">
-        //         <div class="bar bar-1"></div>
-        //         <div class="bar bar-2"></div>
-        //         <div class="bar bar-3"></div>
-        //       </div>
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm print:hidden">
+          <div className="spinner-wrapper">
+            <div className="spinner-container">
+              <div className="outer-spin-bars">
+                <div className="bar bar-1"></div>
+                <div className="bar bar-2"></div>
+                <div className="bar bar-3"></div>
+              </div>
 
-        //       <div class="spinner-progress" id="progressRing"></div>
+              <div className="spinner-progress" id="progressRing"></div>
 
-        //       <div class="spinner-circle"></div>
+              <div className="spinner-circle"></div>
 
-        //       <div class="spinner-inner-circle" id="percentText">
-        //         {exportProgress}%
-        //       </div>
+              <div className="spinner-inner-circle" id="percentText">
+                {exportProgress}%
+              </div>
 
-        //       <div class="progress-loader" id="statusText">
-        //         {exportProgress < 100 ? "Preparing……" : "Ready!"}
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
+              <div className="progress-loader" id="statusText">
+                {exportProgress < 100 ? "Preparing……" : "Ready!"}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
-      <div className={`bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center
-    ${isExporting ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+      <div
+        className={`bg-slate-100 p-4 md:p-8 print:p-0 flex justify-center
+    ${isExporting ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      >
         <div className="w-full max-w-[1122px] printable">
           {employeesData.map((employeeBlock, empIndex) => {
             const pages = paginateTableData(
@@ -144,21 +146,15 @@ const App = () => {
                     <>
                       <ProfileAndHighlights
                         isExporting={isExporting}
-                        employee={employeeBlock.records[0]?.employee}
+                        employee={employeeBlock?.employee}
                         totalHours={calculateTotalHours(
-                          employeeBlock.records
-                            .filter((e) => e.total_hrs !== "---")
-                            .map((r) => r.total_hrs)
+                          employeeBlock.records.map((r) => r.total_hrs)
                         )}
                         lateIn={calculateTotalHours(
-                          employeeBlock.records
-                            .filter((e) => e.late_coming !== "---")
-                            .map((r) => r.late_coming)
+                          employeeBlock.records.map((r) => r.late_coming)
                         )}
                         OT={calculateTotalHours(
-                          employeeBlock.records
-                            .filter((e) => e.ot !== "---")
-                            .map((r) => r.ot)
+                          employeeBlock.records.map((r) => r.ot)
                         )}
                       />
                       <Stats
