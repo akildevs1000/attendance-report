@@ -18,6 +18,8 @@ function Footer({ page, totalPages }) {
         </span>
       </div>
 
+      <div>Short Shift = (*)</div>
+
       <div>Powered By mytime2cloud.com</div>
 
       <div>
