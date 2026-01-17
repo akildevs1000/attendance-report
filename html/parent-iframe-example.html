@@ -44,16 +44,19 @@
         <v-main class="pa-10">
           <h1>Main Dashboard</h1>
           <p>The report will open in a modal overlay above this text.</p>
-
-          <v-btn color="primary" @click="dialog = true">
+          <v-btn color="primary" @click="iframeDialog = true">
             Open Attendance Report
           </v-btn>
 
-          <v-dialog v-model="dialog" persistent content-class="elevation-0">
+          <v-dialog
+            v-model="iframeDialog"
+            persistent
+            content-class="elevation-0"
+          >
             <iframe
-              v-if="dialog"
+              v-if="iframeDialog"
               :src="iframeSrc"
-              height="300px"
+              height="500px"
               width="100%"
               scrolling="no"
               style="border: none; display: block"
@@ -72,10 +75,9 @@
         vuetify: new Vuetify(),
         data() {
           return {
-            dialog: false,
-            progress: 0,
+            iframeDialog: false,
             iframeSrc:
-              "http://localhost:5717/attendance-report/?employee_ids=225&company_id=22&from_date=2025-12-01&to_date=2025-12-31&shift_type_id=2&company_name=V%20PERFUMES",
+              "http://localhost:4444/attendance-report/?employee_ids=225&company_id=22&from_date=2025-12-01&to_date=2025-12-31&shift_type_id=2&company_name=V%20PERFUMES",
           };
         },
         mounted() {
@@ -86,20 +88,15 @@
         },
         methods: {
           closeReport() {
-            this.dialog = false;
-            this.progress = 0;
+            this.iframeDialog = false;
           },
           handleMessage(event) {
             const data = event.data;
 
             if (data && data.type === "EXPORT_STATUS") {
-              this.progress = data.progress || 0;
-
               // Auto-hide/reset when finished
-              if (this.progress >= 100) {
-                setTimeout(() => {
-                  this.closeReport();
-                }, 1000);
+              if (data.status) {
+                this.closeReport();
               }
             }
           },
