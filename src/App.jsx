@@ -49,7 +49,7 @@ const App = () => {
         const results = [];
 
         for (const empId of employee_ids) {
-          const empData = await getData(startDate, endDate, company_id, empId);
+          const empData = await getData(startDate, endDate, company_id, empId, shift_type_id);
           if (empData && empData.length) {
             results.push({
               employee_id: empId,

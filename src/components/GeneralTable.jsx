@@ -1,4 +1,5 @@
 import { STATUS_MAP } from "../utils/helper";
+import { checkShortShift } from "../utils/time";
 
 function GeneralTable({ halfday, working_hours, data = [], pageIndex = 0 }) {
   return (

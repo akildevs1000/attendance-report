@@ -1,4 +1,4 @@
-async function getData(startDate, endDate, company_id, employee_id) {
+async function getData(startDate, endDate, company_id, employee_id, shift_type_id = 0) {
 
     try {
         const formattedFrom = startDate.toISOString().split("T")[0];
@@ -6,6 +6,7 @@ async function getData(startDate, endDate, company_id, employee_id) {
 
         const response = await fetch(
             "https://backend.mytime2cloud.com/api/attendance-report-new",
+            // "http://localhost:8000/api/attendance-report-new",
             {
                 method: "POST",
                 headers: {
@@ -18,7 +19,7 @@ async function getData(startDate, endDate, company_id, employee_id) {
                     to_date: formattedTo,
 
                     report_type: "Monthly",
-                    shift_type_id: 0,
+                    shift_type_id: shift_type_id,
                     report_template: "Template1",
                     overtime: 0,
                     employee_id: [employee_id],
