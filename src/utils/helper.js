@@ -3,4 +3,5 @@ export const STATUS_MAP = {
     H: "Holiday",
     ME: "Manual Entry",
     M: "Missing",
+    O: "WeekOff",
 };
